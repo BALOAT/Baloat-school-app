@@ -17,10 +17,12 @@ mongoose
 //middleware
 app.use(express.json());
 
+const apiVersion = "v1"
+
 // ! -----Routes---------
 app.use("/", usersRouter);
-app.use("/", courseRouter);
-app.use("/", courseSectionRouter);
+app.use(`/api/${apiVersion}/courses`, courseRouter);
+app.use(`/api/${apiVersion}/course-section`, courseSectionRouter);
 
 // Start the server
 app.listen(PORT, console.log(`Server is runing on the port ${PORT}`));
