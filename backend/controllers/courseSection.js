@@ -9,17 +9,17 @@ const User = require("../model/User");
 const courseSectionCtrl = {
   // ! Find the user
   create: asyncHandler(async (req, res) => {
-    const userFound = await User.findById(req.user);
-    if (!userFound) {
-      res.status(404);
-      throw new Error("User not found");
-    }
-    // if (userFound.role !== "instructor") {
-    //   res.status(401);
-    //   throw new Error(
-    //     "You are not authorized to create, instructors only"
-    //   );
+    // const userFound = await User.findById(req.user);
+    // if (!userFound) {
+    //   res.status(404);
+    //   throw new Error("User not found");
     // }
+    // // if (userFound.role !== "instructor") {
+    // //   res.status(401);
+    // //   throw new Error(
+    // //     "You are not authorized to create, instructors only"
+    // //   );
+    // // }
 
     //! Get the section name
     const { sectionName } = req.body;
@@ -27,15 +27,18 @@ const courseSectionCtrl = {
     const { courseId } = req.params;
     // ! Validate the courseId
     if (!mongoose.isValidObjectId(courseId)) {
+      res.status(400);
       throw new Error("Inalid course ID");
     }
     // ! Find the course
     const course = await Course.findById(courseId);
     if (!course) {
+      res.status(404);
       throw new Error("Course not found");
     }
     // ! Validate the section name
     if (!sectionName) {
+      res.status(404);
       throw new Error("Please provide section name");
     }
     // ! Create the course section
@@ -47,7 +50,7 @@ const courseSectionCtrl = {
     course.sections.push(sectionCreated._id);
     // ! resave 
     await course.save();
-    res.json({
+    res.status(201).json({
       message: "Section created successfully",
       data: sectionCreated,
       status: "success",
@@ -67,7 +70,7 @@ const courseSectionCtrl = {
     if (courseSection) {
       res.json(courseSection);
     } else {
-      res.status(400);
+      res.status(404);
       throw new Error("Section not found");
     }
   }),

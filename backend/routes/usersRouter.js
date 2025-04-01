@@ -1,12 +1,15 @@
-const express = require ('express');
+const express = require('express');
 const usersCtrl = require("../controllers/users");
 const isAuthenticated = require('../middlewares/isAuth');
+const { isAdmin } = require('../middlewares/roleAccesMiddleware');
 const usersRouter = express.Router();
 
-// note inside the usersRouter we have all put, ost, delete, get there
+// note inside the usersRouter we have all put, post, delete, get there
 usersRouter.post("/api/v1/users/register", usersCtrl.register);
 usersRouter.post("/api/v1/users/login", usersCtrl.login);
-usersRouter.get("/api/v1/users/profile", isAuthenticated ,usersCtrl.profile);
+usersRouter.get("/api/v1/users/public-profile/:courseId", usersCtrl.profilePublic);
+usersRouter.get("/api/v1/users/private-profile/", isAuthenticated, isAdmin, usersCtrl.profilePrivate);
+usersRouter.get("/api/v1/users/position/:courseId", usersCtrl.lists);
 
 
 
