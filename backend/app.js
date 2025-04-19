@@ -21,6 +21,7 @@ app.use(express.json());
 // Cors
 const corsOptions = {
     origin: ["http://localhost:5173"],
+    // credentials: true
 };
 app.use(cors(corsOptions));
 

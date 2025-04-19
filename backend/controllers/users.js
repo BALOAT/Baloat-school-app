@@ -74,7 +74,7 @@ const usersCtrl = {
     }),
 
     //! Public Profie
-    profilePublic: asyncHandler(async (req, res) => {
+    publicProfile: asyncHandler(async (req, res) => {
         // ! Find the user
         // const userId = req.user; instead of this let use query
         const userId = req.query.userId;
@@ -140,7 +140,7 @@ const usersCtrl = {
     }),
 
     // ! Private profile
-    profilePrivate: asyncHandler(async (req, res) => {
+    privateProfile: asyncHandler(async (req, res) => {
         // ! Find the user
         const userId = req.user;
         // ! Get course id from params
@@ -152,17 +152,23 @@ const usersCtrl = {
                     model: "Course",
                     populate: {
                         path: "sections",
-                        model: "CourseSection"
+                        model: "CourseSection",
                     },
                 },
                 {
                     path: "sections.sectionId",
-                    model: "CourseSection",
-                }
+                    // model: "CourseSection",
+                },
             ],
+        })
+        .populate({
+            path: "coursesCreated",
+            populate: {
+                path: "user",
+            },
         });
         if (!user) {
-            return res.status(404).json({ message: "User not foound" })
+            return res.status(404).json({ message: "User not foound" });
         }
 
         // ! Calculating the progress stactics for each course
@@ -191,7 +197,7 @@ const usersCtrl = {
             };
             res.json(response);
         });
-        console.log(courseProgress);
+        // console.log(courseProgress);
     }),
 
     //! Lists

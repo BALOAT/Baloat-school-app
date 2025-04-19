@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
 
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/slices/authSlice";
+import { logoutAction } from "../../redux/slices/authSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -26,7 +26,7 @@ export default function StudentsNavbar() {
 
   //logout handler
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(logoutAction());
   };
   const data = {};
 

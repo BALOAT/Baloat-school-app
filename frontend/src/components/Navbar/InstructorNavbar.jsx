@@ -1,4 +1,4 @@
-import { Fragment} from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 // import { useMutation, useQuery } from "@tanstack//react-query";
 
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/slices/authSlice";
+import { logoutAction } from "../../redux/slices/authSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -28,7 +28,7 @@ export default function InstructorNavbar() {
 
   //logout handler
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(logoutAction());
   };
   const data = {};
 
